@@ -1,6 +1,6 @@
 #include "motion_171511046.h"
 
-void draw_line_bresenham(int x1, int y1, int x2, int y2, int color)
+void draw_line_bresenham(int x1, int y1, int x2, int y2, int color, int _delay)
 {
 	int dx, dy, i, e;
 	int incx, incy, inc1, inc2;
@@ -20,7 +20,9 @@ void draw_line_bresenham(int x1, int y1, int x2, int y2, int color)
 	x = x1; y = y1;
 	
 	if (dx > dy) {
+		delay(_delay);
 		putpixel(x, y, color);
+		
 		e = 2 * dy-dx;
 		inc1 = 2*(dy-dx);
 		inc2 = 2*dy;
@@ -32,10 +34,13 @@ void draw_line_bresenham(int x1, int y1, int x2, int y2, int color)
 			else
 				e += inc2;
 			x += incx;
+			
 			putpixel(x, y, color);
 		}
 	} else {
+		delay(_delay);
 		putpixel(x, y, color);
+		
 		e = 2*dx-dy;
 		inc1 = 2*(dx-dy);
 		inc2 = 2*dx;
@@ -47,12 +52,13 @@ void draw_line_bresenham(int x1, int y1, int x2, int y2, int color)
 			else
 				e += inc2;
 			y += incy;
+			
 			putpixel(x, y, color);
 		}
 	}
 }
 
-void line_circle(int xCenter, int yCenter, int rad)
+POINT line_circle(int xCenter, int yCenter, int rad)
 {
 	float xCenter1, xCenter2, yCenter1, yCenter2, eps, sx, sy;
 	int val, i;
@@ -70,34 +76,44 @@ void line_circle(int xCenter, int yCenter, int rad)
 	
 	eps = 1/pow(2,i-1);
 	
-	int l_delay=0, c_delay=10;
+	int l_delay=0;
+	int _delay=10;
 	int x_bef=0, y_bef=0;
 	do{
 		xCenter2 = xCenter1 + yCenter1*eps;
 		yCenter2 = yCenter1 - eps*xCenter2;
 		
-		delay(10);
-		
-		if(c_delay == 11){
-			draw_line_bresenham(xCenter, yCenter, x_bef, y_bef, BLACK);
-			draw_line_bresenham(xCenter, yCenter, xCenter+xCenter2-1, yCenter-yCenter2, YELLOW);
+		if(_delay == 21){
+			draw_line_bresenham(xCenter, yCenter, x_bef, y_bef, BLACK, 0);
+			draw_line_bresenham(xCenter, yCenter, xCenter+xCenter2-1, yCenter-yCenter2, YELLOW, 0);
+			
+			_delay=0;
 			x_bef=xCenter+xCenter2-1;
 			y_bef=yCenter-yCenter2;
-			l_delay=0;
 		}
 		
-		if(c_delay < 10){
+		if(_delay < 6){
+			delay(1);
 			putpixel(xCenter+xCenter2,yCenter-yCenter2,3);
 		}
 		
 		xCenter1=xCenter2;	
 		yCenter1=yCenter2;
 		
-		if(c_delay == 20) c_delay = 0;
-		l_delay++;
-		c_delay++;
+		if(_delay == 30) _delay = 0;
+		_delay++;
 	
 	}while((yCenter1-sy)<eps || (sx-xCenter1)>eps);
+	
+	draw_line_bresenham(xCenter, yCenter, x_bef, y_bef, BLACK, 0);
+	draw_line_bresenham(xCenter, yCenter, xCenter+rad, yCenter, YELLOW, 0);
+	delay(200);
+	
+	POINT last_point;
+	last_point.x = xCenter+rad;
+	last_point.y = yCenter;
+	
+	return last_point;
 }
 
 void dda_circle(int xCenter, int yCenter, int rad)
