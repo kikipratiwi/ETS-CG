@@ -1,5 +1,12 @@
 #include "motion_171511046.h"
 
+void set_canvas()
+{
+	setfillstyle(SOLID_FILL, LIGHTGRAY); 
+	rectangle(0, 0, MAXWIDTH, MAXHEIGHT); 
+    floodfill(1,1, LIGHTGRAY);
+}
+
 void rotate_line_360(int x1, int y1, int r, int n) {
 	int x2, y2, xb, yb, x, y, rx, ry;
 	double degree, fulldegree ,arg;
@@ -21,9 +28,9 @@ void rotate_line_360(int x1, int y1, int r, int n) {
 		x = (int) (x1 + (rx) * cos(arg) - (ry)*sin(arg));
 	    y = (int) (y1 + (rx) * sin(arg) - (ry)*cos(arg));
 	    
-	    line_bresenham(x1,y1,x,y, GREEN, 0);
+	    line_bresenham(x1,y1,x,y, GREEN);
 	    
-	    line_bresenham(xb,yb,x,y, RED, 0);
+	    line_bresenham(xb,yb,x,y, RED);
 	    
 	    xb = x;
 	    yb = y;
@@ -143,31 +150,31 @@ void filled_circle_bresenham(int xc, int yc, int r, int color)
 void drawFilledCircle(int xc, int yc, int x, int y, int color)
 {
     putpixel(xc+x, yc+y, color); 
-	line_bresenham(xc, yc, xc+x, yc+y, color, 0);
+	line_bresenham(xc, yc, xc+x, yc+y, color);
 
     putpixel(xc-x, yc+y, color); 
-	line_bresenham(xc, yc, xc-x, yc+y, color, 0);
+	line_bresenham(xc, yc, xc-x, yc+y, color);
     
 	putpixel(xc+x, yc-y, color); 
-	line_bresenham(xc, yc, xc+x, yc-y, color, 0);
+	line_bresenham(xc, yc, xc+x, yc-y, color);
     
 	putpixel(xc-x, yc-y, color); 
-	line_bresenham(xc, yc, xc-x, yc-y, color, 0);
+	line_bresenham(xc, yc, xc-x, yc-y, color);
 
     putpixel(xc+y, yc+x, color); 
-	line_bresenham(xc, yc, xc+y, yc+x, color, 0);
+	line_bresenham(xc, yc, xc+y, yc+x, color);
     
 	putpixel(xc-y, yc+x, color); 
-	line_bresenham(xc, yc, xc-y, yc+x, color, 0);
+	line_bresenham(xc, yc, xc-y, yc+x, color);
     
 	putpixel(xc+y, yc-x, color); 
-	line_bresenham(xc, yc, xc+y, yc-x, color, 0);
+	line_bresenham(xc, yc, xc+y, yc-x, color);
     
 	putpixel(xc-y, yc-x, color);
-	line_bresenham(xc, yc, xc-y, yc-x, color, 0);
+	line_bresenham(xc, yc, xc-y, yc-x, color);
 } 
 
-void line_bresenham(int x1, int y1, int x2, int y2, int color, int _delay)
+void delayed_line_bresenham(int x1, int y1, int x2, int y2, int color, int _delay)
 {
 	int dx, dy, i, e;
 	int incx, incy, inc1, inc2;
@@ -202,10 +209,68 @@ void line_bresenham(int x1, int y1, int x2, int y2, int color, int _delay)
 				e += inc2;
 			x += incx;
 			
+			delay(_delay);
 			putpixel(x, y, color);
 		}
 	} else {
 		delay(_delay);
+		putpixel(x, y, color);
+		
+		e = 2*dx-dy;
+		inc1 = 2*(dx-dy);
+		inc2 = 2*dx;
+		for (i=0; i<dy; i++) {
+			if (e >= 0) {
+				x += incx;
+				e += inc1;
+			}
+			else
+				e += inc2;
+			y += incy;
+			
+			delay(_delay);
+			putpixel(x, y, color);
+		}
+	}
+}
+
+void line_bresenham(int x1, int y1, int x2, int y2, int color)
+{
+	int dx, dy, i, e;
+	int incx, incy, inc1, inc2;
+	int x,y;
+
+	dx = x2-x1;
+	dy = y2-y1;
+
+	if (dx < 0) dx = -dx;
+	if (dy < 0) dy = -dy;
+	incx = 1;
+	
+	if (x2 < x1) incx = -1;
+	incy = 1;
+	
+	if (y2 < y1) incy = -1;
+	x = x1; y = y1;
+	
+	if (dx > dy) {
+		putpixel(x, y, color);
+		
+		e = 2 * dy-dx;
+		inc1 = 2*(dy-dx);
+		inc2 = 2*dy;
+		for (i=0; i<dx; i++) {
+			if (e >= 0) {
+				y += incy;
+				e += inc1;
+			}
+			else
+				e += inc2;
+			x += incx;
+			
+			putpixel(x, y, color);
+		}
+	} else {
 		putpixel(x, y, color);
 		
 		e = 2*dx-dy;
@@ -266,8 +331,8 @@ POINT dotted_line_circle(int xCenter, int yCenter, int rad)
 			x = (int) (xCenter + (x_rot) * cos(arg) - (y_rot)*sin(arg));
 			y = (int) (yCenter + (x_rot) * sin(arg) - (y_rot)*cos(arg));
 			
-			line_bresenham(xCenter, yCenter, x_bef, y_bef, WHITE, 0);
-			line_bresenham(xCenter, yCenter, x-1, y, YELLOW, 0);
+			line_bresenham(xCenter, yCenter, x_bef, y_bef, WHITE);
+			line_bresenham(xCenter, yCenter, x-1, y, MOCCA);
 			
 			_delay=0;
 			x_bef=x-1;
@@ -278,7 +343,8 @@ POINT dotted_line_circle(int xCenter, int yCenter, int rad)
 		
 		if(_delay < 6){
 			delay(1);
-			putpixel(xCenter+xCenter2,yCenter-yCenter2,3);
+			putpixel(xCenter+xCenter2,yCenter-yCenter2,MOCCA);
+			putpixel(xCenter+xCenter2,yCenter-yCenter2+1,MOCCA);
 		}
 		
 		xCenter1=xCenter2;	
@@ -290,10 +356,10 @@ POINT dotted_line_circle(int xCenter, int yCenter, int rad)
 	}while((yCenter1-sy)<eps || (sx-xCenter1)>eps);
 	
 	//remove last-1 line in circle
-	line_bresenham(xCenter, yCenter, x_bef, y_bef, WHITE, 0);
+	line_bresenham(xCenter, yCenter, x_bef, y_bef, WHITE);
 
 	//draw last  line
-	line_bresenham(xCenter, yCenter, xCenter+rad, yCenter, YELLOW, 5);
+	line_bresenham(xCenter, yCenter, xCenter+rad, yCenter, MOCCA);
 	
 	POINT last_POINT;
 	last_POINT.x = xCenter+rad;
@@ -344,8 +410,8 @@ POINT solid_line_circle(int xCenter, int yCenter, int rad)
 			x = (int) (xCenter + (x_rot) * cos(arg) - (y_rot)*sin(arg));
 			y = (int) (yCenter + (x_rot) * sin(arg) - (y_rot)*cos(arg));
 			
-			line_bresenham(xCenter, yCenter, x_bef, y_bef, WHITE, 0);
-			line_bresenham(xCenter, yCenter, x-1, y, YELLOW, 0);
+			line_bresenham(xCenter, yCenter, x_bef, y_bef, WHITE);
+			line_bresenham(xCenter, yCenter, x-1, y, MOCCA);
 			
 			_delay=0;
 			x_bef=x-1;
@@ -355,7 +421,8 @@ POINT solid_line_circle(int xCenter, int yCenter, int rad)
 		}
 		
 			delay(1);
-			putpixel(xCenter+xCenter2,yCenter-yCenter2,3);
+			putpixel(xCenter+xCenter2,yCenter-yCenter2,MOCCA);
+			putpixel(xCenter+xCenter2,yCenter-yCenter2+1,MOCCA);
 		
 		xCenter1=xCenter2;	
 		yCenter1=yCenter2;
@@ -366,10 +433,10 @@ POINT solid_line_circle(int xCenter, int yCenter, int rad)
 	}while((yCenter1-sy)<eps || (sx-xCenter1)>eps);
 	
 	//remove last-1 line in circle
-	line_bresenham(xCenter, yCenter, x_bef, y_bef, WHITE, 0);
+	line_bresenham(xCenter, yCenter, x_bef, y_bef, WHITE);
 
 	//draw last  line
-	line_bresenham(xCenter, yCenter, xCenter+rad, yCenter, YELLOW, 5);
+	line_bresenham(xCenter, yCenter, xCenter+rad, yCenter, MOCCA);
 	
 	POINT last_POINT;
 	last_POINT.x = xCenter+rad;
@@ -402,6 +469,7 @@ void dda_circle(int xCenter, int yCenter, int rad, int color)
 		
 		// delay(10);
 		putpixel(xCenter+xCenter2,yCenter-yCenter2,	color);
+		putpixel(xCenter+xCenter2,yCenter-yCenter2+1,	color);
 		
 		xCenter1=xCenter2;	
 		yCenter1=yCenter2;

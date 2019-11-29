@@ -23,8 +23,11 @@
 #define ROUND(a) ((int) (a+0.5))
 #define PI 3.14159265
 #define CREAM (RGB(128, 103, 9))
+#define GRAY (RGB(105, 105, 105))
+#define MOCCA (RGB(125, 101, 64))
 
 
+void set_canvas();
 
 void rotate_line_360(int x1, int y1, int r, int n);
 
@@ -44,7 +47,8 @@ void circle_bresenham(int xc, int yc, int r, int color);
 void filled_circle_bresenham(int xc, int yc, int r, int color);
 
 // sumber: https://github.com/nowke/cg_lab/blob/master/1_bresenham_line/bresenham_line.cpp
-void line_bresenham(int x1, int y1, int x2, int y2, int color, int _delay);
+void line_bresenham(int x1, int y1, int x2, int y2, int color);
+void delayed_line_bresenham(int x1, int y1, int x2, int y2, int color, int _delay);
 
 POINT dotted_line_circle(int xCenter, int yCenter, int rad);
 POINT solid_line_circle(int xCenter, int yCenter, int rad);

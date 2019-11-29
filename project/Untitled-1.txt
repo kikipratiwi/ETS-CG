@@ -1,0 +1,30 @@
+	int dx = abs (x1 - x2), dy = abs (y1 - y2);
+	int p = 2 * dy - dx;
+	int twoDy = 2 * dy, twoDyDx = 2 * (dy - dx); 
+	int x, y, xEnd;
+	 
+	/* Determine which point to use as start, which as end */ 
+	if (x1 > x2) {
+		x = x2;
+		y = y2;
+		xEnd = x1;
+	} else {
+		x = x1; 
+		y = y1; 
+		xEnd = x2; 
+	}
+	
+	putpixel (x, y, color);
+	delay(_delay);
+	
+	while (x < xEnd) {
+		x++;
+		if (p < 0) {
+			p += twoDy; 	
+		}else {
+			y++;
+			p += twoDyDx;
+		}
+		putpixel (x, y, color);
+		delay(_delay);	
+	}  
