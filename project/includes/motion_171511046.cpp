@@ -8,7 +8,7 @@ void set_canvas()
     floodfill(1,1, WHITE);
 }
 
-POINT point_rotate_cw(int xCenter, int yCenter, int x, int y, float deg)
+POINT point_rotate_cw(int xCenter, int yCenter, int x, int y, float degree)
 {
      float xaksen , yaksen; 
      POINT aksen;
@@ -38,7 +38,7 @@ void draw_rotate_rectangle(POINT p_center, POINT p[], int degree)
 {
 	POINT pr[4];
 	// int value_added = ang / 5;
-	float deg = 1;
+	float degree = 1;
 	while (deg <= ang)
 	{
 		for(int i=0; i<4; i++)
@@ -59,7 +59,7 @@ void draw_rotate_point(POINT p_center, POINT p[], int degree)
 {
 	POINT pr[4];
 	// int value_added = ang / 5;
-	float deg = 0;
+	float degree = 0;
 	while (deg <= ang)
 	{	
 		pr[0] = point_rotate_cw(p_center.x, p_center.y+100, p[0].x, p[0].y, deg);
@@ -83,7 +83,7 @@ void draw_rotate_scale_rectangle(POINT p_center, POINT p[], int degree, float sc
 {
 	POINT pr[4];
 	// int value_added = ang / 5;
-	float deg = ang;
+	float degree = degree;
 	for(int i=0; i<4; i++)
 	{
 		pr[i] = point_rotate_cw(p_center.x, p_center.y, p[i].x, p[i].y, deg);
@@ -140,7 +140,7 @@ void draw_rotate_scale_rectangle(POINT p_center, POINT p[], int degree, float sc
 	}
 }
 
-void draw_scale_rectangle(POINT p_center, int r, float scale)
+void draw_scale_rectangle(POINT p_center, int radius, float scale)
 {
 	line_bresenham(p_center.x, p_center.y+r, p_center.x-r, p_center.y, MOCCA);
 	line_bresenham(p_center.x-r, p_center.y, p_center.x, p_center.y-r, MOCCA);
@@ -178,7 +178,7 @@ void draw_rectangle(POINT p[])
 }
 
 
-void draw_rotate_line_360(int x1, int y1, int r, int n)
+void draw_rotate_line_360(int x1, int y1, int radius, int n)
 {
 	int x2, y2, xb, yb, x, y, rx, ry;
 	double degree, fulldegree ,arg;
@@ -207,7 +207,7 @@ void draw_rotate_line_360(int x1, int y1, int r, int n)
 }
 
 
-void rotate_line_360(int x1, int y1, int r, int n)
+void rotate_line_360(int x1, int y1, int radius, int n)
 {
 	int x2, y2, xb, yb, x, y, rx, ry;
 	double degree, fulldegree ,arg;
@@ -241,7 +241,7 @@ void rotate_line_360(int x1, int y1, int r, int n)
 	}
 }
 
-POINT rotate_cw(POINT center, POINT pivot, double angle){
+POint radiusotate_cw(POINT center, POINT pivot, double angle){
 	POINT p1;
 	double radian=angle*(-0.01745);
 	
@@ -251,7 +251,7 @@ POINT rotate_cw(POINT center, POINT pivot, double angle){
 	return p1;
 }
 
-POINT rotate_ccw(POINT center, POINT pivot, double angle){
+POint radiusotate_ccw(POINT center, POINT pivot, double angle){
 	POINT p1;
 	double radian=angle*(-0.01745);
 	
@@ -282,73 +282,7 @@ void draw_cartesian_axis()
 	setcolor(5); // green
 }
 
-
-void ellipseMidPoint (int xCenter,int yCenter, int Rx,int Ry)
-{
-	void ellipsePlotPoints(int xCenter, int yCenter, int x, int y);
-
-    int Rx2 = Rx*Rx;
-    int Ry2 = Ry*Ry;
-    int twoRx2 = 2*Rx2;
-    int twoRy2 = 2*Ry2;
-    int p;
-    int x = 0;
-    int y = Ry;
-    int px = 0;
-    int py = twoRx2 * y;
-	
-    // Plot the first set of points
-    ellipsePlotPoints(xCenter,yCenter,x,y);
-    
-	// Region 1
-    p = ROUND(Ry2 - (Rx2 *Ry) + (0.25 * Rx2));
-        while (px<py){
-            x++;
-            px  += twoRy2;
-            if( p < 0){
-              p += Ry2 + px;
-            }
-            else{
-                y--;
-                py -= twoRx2;
-                p += Ry2 + px - py;
-            }
-            ellipsePlotPoints (xCenter,yCenter,x,y);
-        }
-    
-    //Region 2
-    p = ROUND (Ry2*(x+0.5)*(x+0.5) + Rx2*(y-1)*(y-1) - Rx2*Ry2);
-        while(y>0){
-            y--;
-            py -= twoRx2;
-            if(p>0){
-                    p += Rx2 - py;
-            }
-            else{
-                x++;
-                px += twoRy2;
-                p += Rx2 - py + px;
-            }
-            ellipsePlotPoints (xCenter,yCenter,x,y);
-
-        }
-}
-
-void ellipsePlotPoints(int xCenter, int yCenter, int x, int y)
-{
-		
-	putpixel(xCenter + x, yCenter + y,1);
-	putpixel(xCenter - x, yCenter + y,1);
-	putpixel(xCenter + x, yCenter - y,1);
-	putpixel(xCenter - x, yCenter - y,1);
-	
-	putpixel(xCenter + x, yCenter + y,2);
-	putpixel(xCenter - x, yCenter + y,2);
-	putpixel(xCenter + x, yCenter - y,2);
-	putpixel(xCenter - x, yCenter - y,2);
-}
-
-void draw_rotate_translation_circle(POINT p_center, int r, int color, int degree)
+void draw_rotate_translation_circle(POINT p_center, int radius, int color, int degree)
 {
 	POINT p_center_top;
 	p_center_top.x = p_center.x;
@@ -356,7 +290,7 @@ void draw_rotate_translation_circle(POINT p_center, int r, int color, int degree
 
 	POINT pr;
 	// int value_added = ang / 5;
-	float deg = 0;
+	float degree = 0;
 	while (deg <= FULLDEGREE)
 	{
 		pr = point_rotate_cw(p_center.x, p_center.y, p_center_top.x, p_center_top.y, deg);
@@ -372,7 +306,7 @@ void draw_rotate_translation_circle(POINT p_center, int r, int color, int degree
 
 }
 
-void draw_translation_two_circle(POINT p_center, int r, int color)
+void draw_translation_two_circle(POINT p_center, int radius, int color)
 {
 	POINT p_center_top;
 	POINT p_center_botttom;
@@ -395,7 +329,7 @@ void draw_translation_two_circle(POINT p_center, int r, int color)
 
 }
 
-void circle_bresenham(int xc, int yc, int r, int color)
+void circle_bresenham(int xc, int yc, int radius, int color)
 { 
 	void drawCircle(int xc, int yc, int x, int y, int color);
 	
@@ -434,7 +368,7 @@ void drawCircle(int xc, int yc, int x, int y, int color)
 	putpixel(xc-y, yc-x, color);
 } 
 
-void filled_circle_bresenham(int xc, int yc, int r, int color)
+void filled_circle_bresenham(int xc, int yc, int radius, int color)
 { 
 	void drawFilledCircle(int xc, int yc, int x, int y, int color);
 	
@@ -604,7 +538,7 @@ void line_bresenham(int x1, int y1, int x2, int y2, int color)
 	}
 }
 
-POINT dotted_line_circle(int xCenter, int yCenter, int rad)
+POINT dotted_line_circle(int xCenter, int yCenter, int radiusad)
 {
 	float xCenter1, xCenter2, yCenter1, yCenter2, eps, sx, sy;
 	int val, i;
@@ -683,7 +617,7 @@ POINT dotted_line_circle(int xCenter, int yCenter, int rad)
 }
 
 
-POINT solid_line_circle(int xCenter, int yCenter, int rad)
+POINT solid_line_circle(int xCenter, int yCenter, int radiusad)
 {
 	float xCenter1, xCenter2, yCenter1, yCenter2, eps, sx, sy;
 	int val, i;
@@ -759,7 +693,7 @@ POINT solid_line_circle(int xCenter, int yCenter, int rad)
 	return last_POINT;
 }
 
-void dda_circle(int xCenter, int yCenter, int rad, int color)
+void dda_circle(int xCenter, int yCenter, int radiusad, int color)
 {
 	float xCenter1, xCenter2, yCenter1, yCenter2, eps, sx, sy;
 	int val, i;

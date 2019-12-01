@@ -5,9 +5,9 @@
 #define ROUND(a) ((int) (a+0.5))
 #define PI 3.14159265
 
-void drawPattern(int xCenter, int yCenter, int radius, float rotate);
-POINT pointRotation(int xCenter, int yCenter, int x, int y, float deg);
-void circleMidPoint(int xCenter, int yCenter, int radius);
+void drawPattern(int xCenter, int yCenter, int radiusadius, float rotate);
+POINT pointRotation(int xCenter, int yCenter, int x, int y, float degree);
+void circleMidPoint(int xCenter, int yCenter, int radiusadius);
 void circlePlotPoints(int xCenter, int yCenter, int x,int y);
 void lineDDA (int xa, int ya, int xb, int yb);
 
@@ -43,7 +43,7 @@ int main(){
     return 0;
 }
 
-void drawPattern(int xCenter, int yCenter, int radius, float rotate){
+void drawPattern(int xCenter, int yCenter, int radiusadius, float rotate){
      circleMidPoint(xCenter, yCenter, radius);
      //TRANSLASI titik pusat sebesar x=0 y=radius
      int yCenter2 = yCenter + radius;
@@ -51,7 +51,7 @@ void drawPattern(int xCenter, int yCenter, int radius, float rotate){
      
      //Gambar lingkaran
      POINT p_center;
-     float deg = 0+rotate;
+     float degree = 0+rotate;
      for(int i=0;i<6;i++){
         p_center = pointRotation(xCenter, yCenter, xCenter, yCenter2, deg);
         circleMidPoint(p_center.x, p_center.y, radius);
@@ -77,7 +77,7 @@ void drawPattern(int xCenter, int yCenter, int radius, float rotate){
 }
 
 //ROTASI
-POINT pointRotation(int xCenter, int yCenter, int x, int y, float deg){
+POINT pointRotation(int xCenter, int yCenter, int x, int y, float degree){
      float xaksen , yaksen; 
      POINT aksen;
      
@@ -101,7 +101,7 @@ POINT pointRotation(int xCenter, int yCenter, int x, int y, float deg){
 }
 
 //CIRCLE MIDPOINTS
-void circleMidPoint(int xCenter, int yCenter, int radius){
+void circleMidPoint(int xCenter, int yCenter, int radiusadius){
 	 int x = 0;
 	 int y = radius;
 	 int p = 1 - radius;

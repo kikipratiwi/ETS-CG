@@ -12,7 +12,7 @@ int main() {
 	
 	/* =========================================WATCH ANIMATION============================================== */
 	// init radius
-	int r = 100;
+	int radius = 100;
 
 	// declarating dynamic x y axis for next line
 	POINT next_line_point;
