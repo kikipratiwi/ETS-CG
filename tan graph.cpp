@@ -5,7 +5,7 @@
  
 int main() {
     int gd = DETECT, gm;
-    int angle = 0;
+    int degree = 0;
     double x, y;
  
     initgraph(&gd, &gm, "");

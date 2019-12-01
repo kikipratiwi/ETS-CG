@@ -19,7 +19,7 @@ void bungaBSangkar(int xa, int ya, int jarak);
 void fungsiRandom(int x, int y);
 
 
-POINT pointRotation(int xpusat, int ypusat, int x, int y, int deg);
+POINT pointRotation(int xpusat, int yCenter, int x, int y, int deg);
 
 int main( )
 {
@@ -114,7 +114,7 @@ int main( )
 }    
 
 
-POINT pointRotation(int xpusat, int ypusat, int x, int y, int deg){
+POINT pointRotation(int xpusat, int yCenter, int x, int y, int deg){
      int xaksen , yaksen; 
      POINT aksen;
      
@@ -122,13 +122,13 @@ POINT pointRotation(int xpusat, int ypusat, int x, int y, int deg){
      double val = PI / 180.0;
      //tranlasi awal
      xtrans = x + (-1 * xpusat);
-     ytrans = y + (-1 * ypusat);
+     ytrans = y + (-1 * yCenter);
      //cari aksen
      xaksen = xtrans * cos(val * deg) - ytrans * sin(val * deg);
      yaksen = ytrans * cos(val * deg) + xtrans * sin(val * deg);
      //tranlasi akhir  
      xaksen = xaksen + (xpusat);
-     yaksen = yaksen + (ypusat);
+     yaksen = yaksen + (yCenter);
      printf("%d %d\n", xaksen, yaksen);
      
      aksen.x = xaksen;
