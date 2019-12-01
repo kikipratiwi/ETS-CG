@@ -5,9 +5,9 @@
 #define ROUND(a) ((int) (a+0.5))
 #define PI 3.14159265
 
-void drawPattern(int xCenter, int yCenter, int radiusadius, float rotate);
+void drawPattern(int xCenter, int yCenter, int radiusius, float rotate);
 POINT pointRotation(int xCenter, int yCenter, int x, int y, float degree);
-void circleMidPoint(int xCenter, int yCenter, int radiusadius);
+void circleMidPoint(int xCenter, int yCenter, int radiusius);
 void circlePlotPoints(int xCenter, int yCenter, int x,int y);
 void lineDDA (int xa, int ya, int xb, int yb);
 
@@ -43,7 +43,7 @@ int main(){
     return 0;
 }
 
-void drawPattern(int xCenter, int yCenter, int radiusadius, float rotate){
+void drawPattern(int xCenter, int yCenter, int radiusius, float rotate){
      circleMidPoint(xCenter, yCenter, radius);
      //TRANSLASI titik pusat sebesar x=0 y=radius
      int yCenter2 = yCenter + radius;
@@ -101,7 +101,7 @@ POINT pointRotation(int xCenter, int yCenter, int x, int y, float degree){
 }
 
 //CIRCLE MIDPOINTS
-void circleMidPoint(int xCenter, int yCenter, int radiusadius){
+void circleMidPoint(int xCenter, int yCenter, int radiusius){
 	 int x = 0;
 	 int y = radius;
 	 int p = 1 - radius;
