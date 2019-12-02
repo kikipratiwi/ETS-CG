@@ -11,10 +11,15 @@
 /* ==============================================CANVAS================================================= */
 #define ROUND(a) ((int) (a+0.5))
 
-#define _MAXWIDTH 	getmaxx()
-#define _MAXHEIGHT	getmaxy()
-#define _HALFWIDTH 	ROUND(_MAXWIDTH/2)
-#define _HALFHEIGHT	ROUND(_MAXHEIGHT/2)
+#define MINWIDTH 	200
+#define MINHEIGHT 	200
+#define MINRADIUS 	20
+#define MAXWIDTH 	getmaxx()
+#define MAXHEIGHT	getmaxy()
+#define HALFWIDTH 	ROUND(MAXWIDTH/2)
+#define	HALFHEIGHT	ROUND(MAXHEIGHT/2)
+#define RADIUSX		MAXWIDTH/4
+#define RADIUSY		MAXHEIGHT/4
 #define	FULLDEGREE	360
 
 /* ==============================================DELAY================================================= */
@@ -55,7 +60,7 @@ POINT point_translation(int x, int y, int x1, int y1); //not used
 /* ======================================DRAW ANIMATED OBJECT========================================== */
 void delayed_draw_rotate_line_360(int x1, int y1, int radius, int n);
 void draw_rotate_line_360(int x1, int y1, int radius, int n);
-void animate_rotate_point(POINT p_center, POINT p[], int degree);
+void animate_rotate_point(POINT p_center, POINT p[], int degree, int radius);
 void animate_rotate_rectangle(POINT p_center, POINT p[], int degree);
 void draw_rectangle(POINT p[]);
 void animate_rotate_translation_rectangle(POINT p_center, POINT p[], int degree);

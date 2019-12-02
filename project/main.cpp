@@ -4,17 +4,21 @@
 int main() {
 	srand(time(NULL));
 
-	// render window
-    initwindow( MAXWIDTH , MAXHEIGHT , "ETS_171511046", 200);
+	int width, height, radius;
+	printf("Masukan width dan height screen: "); scanf("%d %d", &width, &height);
+	printf("Masukan radius: "); scanf("%d", &radius);
+    
+    if(width <= MINWIDTH || height <= MINHEIGHT) 
+	{
+		width = MINWIDTH;
+		height = MINHEIGHT;
+		radius = MINRADIUS;
+	}
 
+	// render window
+    initwindow( width , height , "ETS_171511046", 200);
+    
 	/* ===========================================================CIRCLE ANIMATION=================================================================== */
-	// init radius
-	int radius = 100;
-	
-	// init point center screen
-	POINT CENTER;
-	CENTER.x = HALFWIDTH;
-	CENTER.y = HALFHEIGHT;
 
 	// declarating dynamic x y axis for next line
 	POINT next_line_point;
@@ -109,12 +113,14 @@ int main() {
 	cleardevice();
 	
 	/* =============================================================DRAW ROTATE SQUARE ANIMATION============================================================= */
+	POINT CENTER;
+	CENTER.x = HALFWIDTH;
+	CENTER.y = HALFHEIGHT;
+	
 	// rotate rectangle 45 degrees
 	animate_rotate_rectangle(CENTER, circle_center_point, DEGREE45);
 	// animating split up and down rectangle 
 	animate_rotate_translation_rectangle(CENTER, circle_center_point, DEGREE45);
-	// draw last rotate rectangle
-	draw_rotate_rectangle(CENTER, radius+40);
 
 	delay(DELAY200);
 	
@@ -140,7 +146,7 @@ int main() {
 	delayed_line_bresenham(circle_center_point[3].x, circle_center_point[3].y, circle_center_point[0].x, circle_center_point[0].y, BLACK, 1);
 
 	// rotating point
-	animate_rotate_point(CENTER, circle_center_point, DEGREE90);
+	animate_rotate_point(CENTER, circle_center_point, DEGREE90, radius);
 	draw_two_circle(CENTER.x, CENTER.y, radius, LIGHTCLAY, 1);
 	// animating two circle
 	delay(DELAY200); animate_translation_two_circle(CENTER, radius, LIGHTCLAY);
@@ -153,7 +159,6 @@ int main() {
 	delay(DELAY200);	draw_rotate_translation_circle(CENTER, radius, LIGHTCLAY, DEGREE60, DELAY100);
 	// draw 12 line by rotation
 	delay(DELAY200);	delayed_draw_rotate_line_360(CENTER.x, CENTER.y, radius*2, 12);
-	filled_circle_bresenham(CENTER.x, CENTER.y, 2, WHITE);
 	delay(DELAY300);
 	
 /* =======================================================================ANIMATIE FINAL PATTERN================================================================= */
@@ -167,12 +172,17 @@ int main() {
 	int random_color = LIGHTCLAY;
 	bool _true = true;
     int page = 0;
+    
+    int prev_width = MAXWIDTH;
 
 	// final pattern animation
 	while(_true) {
         setactivepage(page);
         setvisualpage(1-page);
         cleardevice();
+		
+		CENTER.x = HALFWIDTH;
+		CENTER.y = HALFHEIGHT;
 		
 		inc_scale = scale*cos(PI_PER_RADIAN * inc_rotate * speed); // big to small scale, use sin function for otherwise
 
@@ -182,6 +192,8 @@ int main() {
 		random_color = rand() % 14 + 1; //random from 1 s.d 14
 		inc_rotate += 0.15;
         page = 1-page;
+        
+        if(prev_width != MAXWIDTH) scale = MAXWIDTH/6;
 	 }
 
 	getch();
@@ -191,3 +203,4 @@ int main() {
 	
 	return 0;
 }
+

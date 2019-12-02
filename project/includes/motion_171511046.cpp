@@ -151,17 +151,17 @@ void draw_rotate_line_360(int x1, int y1, int radius, int n)
 	}
 }
 
-void animate_rotate_point(POINT p_center, POINT p[], int degree)
+void animate_rotate_point(POINT p_center, POINT p[], int degree, int radius)
 {
 	POINT pr[4];
 	
 	float _degree = 0;
 	while (_degree <= degree)
 	{	
-		pr[0] = point_rotate_cw(p_center.x, p_center.y+100, p[0].x, p[0].y, _degree);
-		pr[1] = point_rotate_cw(p_center.x, p_center.y+100, p[1].x, p[1].y, _degree);
-		pr[2] = point_rotate_cw(p_center.x, p_center.y-100, p[2].x, p[2].y, _degree);
-		pr[3] = point_rotate_cw(p_center.x, p_center.y-100, p[3].x, p[3].y, _degree);
+		pr[0] = point_rotate_cw(p_center.x, p_center.y+radius, p[0].x, p[0].y, _degree);
+		pr[1] = point_rotate_cw(p_center.x, p_center.y+radius, p[1].x, p[1].y, _degree);
+		pr[2] = point_rotate_cw(p_center.x, p_center.y-radius, p[2].x, p[2].y, _degree);
+		pr[3] = point_rotate_cw(p_center.x, p_center.y-radius, p[3].x, p[3].y, _degree);
 
 
 		cleardevice();
@@ -225,7 +225,7 @@ void animate_rotate_translation_rectangle(POINT p_center, POINT p[], int degree)
 	delay(DELAY200);
 	
 	// split up
-	while ( t_inc < 100)
+	while ( t_inc < RADIUSY)
 	{
 		t_inc += 1;
 		cleardevice();
@@ -248,6 +248,7 @@ void animate_rotate_translation_rectangle(POINT p_center, POINT p[], int degree)
 	}
 	
 	delay(DELAY200);
+	t_inc = RADIUSY;
 	
 	// split down
 	while ( t_inc > 0)
@@ -653,7 +654,7 @@ POINT dotted_line_circle(int xCenter, int yCenter, int radius)
 	
 	eps = 1/pow(2,i-1);
 	
-	int _delay=10;
+	int _delay=0;
 	int x_bef=xCenter, y_bef=yCenter;
 
 	int x_pivot = xCenter+radius;
@@ -667,35 +668,16 @@ POINT dotted_line_circle(int xCenter, int yCenter, int radius)
 		xCenter2 = xCenter1 + yCenter1*eps;
 		yCenter2 = yCenter1 - eps*xCenter2;
 		
-		if(_delay == DELAY22){
-			arg = (fulldegree * 0.01745);
-		
-			x_rot = x_pivot-xCenter;
-			y_rot = y_pivot-yCenter;
-			
-			x = (int) (xCenter + (x_rot) * cos(arg) - (y_rot)*sin(arg));
-			y = (int) (yCenter + (x_rot) * sin(arg) - (y_rot)*cos(arg));
-			
-			line_bresenham(xCenter, yCenter, x_bef, y_bef, BLACK);
-			line_bresenham(xCenter, yCenter, x-1, y, LIGHTCLAY);
-			
-			_delay=0;
-			x_bef=x-1;
-			y_bef=y;
-			
-		    fulldegree = fulldegree + degree;
-		}
-		
-		if(_delay < 6){
+		if(_delay == 6){
 			delay(1);
 			putpixel(xCenter+xCenter2,yCenter-yCenter2,LIGHTCLAY);
 			putpixel(xCenter+xCenter2,yCenter-yCenter2+1,LIGHTCLAY);
+			_delay = 0;
 		}
 		
 		xCenter1=xCenter2;	
 		yCenter1=yCenter2;
 		
-		if(_delay == DELAY30) _delay = 0;
 		_delay++;
 	
 	}while((yCenter1-sy)<eps || (sx-xCenter1)>eps);
@@ -744,25 +726,6 @@ POINT solid_line_circle(int xCenter, int yCenter, int radius)
 	do{
 		xCenter2 = xCenter1 + yCenter1*eps;
 		yCenter2 = yCenter1 - eps*xCenter2;
-		
-		if(_delay == DELAY22){
-			arg = (fulldegree * 0.01745);
-		
-			x_rot = x_pivot-xCenter;
-			y_rot = y_pivot-yCenter;
-			
-			x = (int) (xCenter + (x_rot) * cos(arg) - (y_rot)*sin(arg));
-			y = (int) (yCenter + (x_rot) * sin(arg) - (y_rot)*cos(arg));
-			
-			line_bresenham(xCenter, yCenter, x_bef, y_bef, BLACK);
-			line_bresenham(xCenter, yCenter, x-1, y, LIGHTCLAY);
-			
-			_delay=0;
-			x_bef=x-1;
-			y_bef=y;
-			
-		    fulldegree = fulldegree + degree;
-		}
 		
 			delay(1);
 			putpixel(xCenter+xCenter2,yCenter-yCenter2,LIGHTCLAY);
