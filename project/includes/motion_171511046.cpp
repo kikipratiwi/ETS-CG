@@ -120,7 +120,7 @@ void delayed_draw_rotate_line_360(int x1, int y1, int radius, int n)
 		filled_circle_bresenham(x, y, 2, WHITE);
 	    
 	    fulldegree = fulldegree + degree;
-	    delay(100);
+	    delay(DELAY100);
 	}
 }
 
@@ -171,7 +171,7 @@ void animate_rotate_point(POINT p_center, POINT p[], int degree)
 		filled_circle_bresenham(pr[3].x, pr[3].y, 2, WHITE);
 
 		_degree += 1;
-		delay(10);
+		delay(DELAY10);
 	}
 }
 
@@ -188,7 +188,7 @@ void animate_rotate_rectangle(POINT p_center, POINT p[], int degree)
 		}
 
 		cleardevice();
-		delay(10);
+		delay(DELAY10);
 		draw_rectangle(pr);
 		
 		_degree += 1;
@@ -244,7 +244,7 @@ void animate_rotate_translation_rectangle(POINT p_center, POINT p[], int degree)
 		draw_rotate_rectangle(p_center_2, mini_radius);
 		draw_rotate_rectangle(p_center_3, mini_radius);
 
-		delay(10);
+		delay(DELAY10);
 	}
 	
 	delay(DELAY200);
@@ -267,7 +267,7 @@ void animate_rotate_translation_rectangle(POINT p_center, POINT p[], int degree)
 		p_center_2.x -= t_inc_mini_rectangle;
 		p_center_3.x += t_inc_mini_rectangle;
 
-		delay(10);
+		delay(DELAY10);
 	}
 }
 
@@ -384,7 +384,7 @@ void dda_circle(int xCenter, int yCenter, int radius, int color)
 		xCenter2 = xCenter1 + yCenter1*eps;
 		yCenter2 = yCenter1 - eps*xCenter2;
 		
-		// delay(10);
+		// delay(DELAY10);
 		putpixel(xCenter+xCenter2,yCenter-yCenter2,	color);
 		putpixel(xCenter+xCenter2,yCenter-yCenter2+1,	color);
 		
@@ -667,7 +667,7 @@ POINT dotted_line_circle(int xCenter, int yCenter, int radius)
 		xCenter2 = xCenter1 + yCenter1*eps;
 		yCenter2 = yCenter1 - eps*xCenter2;
 		
-		if(_delay == 22){
+		if(_delay == DELAY22){
 			arg = (fulldegree * 0.01745);
 		
 			x_rot = x_pivot-xCenter;
@@ -695,7 +695,7 @@ POINT dotted_line_circle(int xCenter, int yCenter, int radius)
 		xCenter1=xCenter2;	
 		yCenter1=yCenter2;
 		
-		if(_delay == 30) _delay = 0;
+		if(_delay == DELAY30) _delay = 0;
 		_delay++;
 	
 	}while((yCenter1-sy)<eps || (sx-xCenter1)>eps);
@@ -745,7 +745,7 @@ POINT solid_line_circle(int xCenter, int yCenter, int radius)
 		xCenter2 = xCenter1 + yCenter1*eps;
 		yCenter2 = yCenter1 - eps*xCenter2;
 		
-		if(_delay == 22){
+		if(_delay == DELAY22){
 			arg = (fulldegree * 0.01745);
 		
 			x_rot = x_pivot-xCenter;
@@ -771,7 +771,7 @@ POINT solid_line_circle(int xCenter, int yCenter, int radius)
 		xCenter1=xCenter2;	
 		yCenter1=yCenter2;
 		
-		if(_delay == 30) _delay = 0;
+		if(_delay == DELAY30) _delay = 0;
 		_delay++;
 	
 	}while((yCenter1-sy)<eps || (sx-xCenter1)>eps);

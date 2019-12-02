@@ -20,8 +20,11 @@
 #define DELAY100 100
 #define DELAY200 200
 #define DELAY300 300
-#define DELAY2	 2 
 #define DELAY1	 1 
+#define DELAY2	 2 
+#define DELAY10	 10 
+#define DELAY22	 22 
+#define DELAY30	 30 
 
 /* =========================================TRANSFORMATION============================================== */
 // Using macros to convert degree to radian 

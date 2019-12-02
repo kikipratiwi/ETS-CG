@@ -173,7 +173,7 @@ int main() {
 		random_color = rand() % 15;
 		inc_scale = scale*sin(0.017444 * inc_rotate * speed);
 		
-		delay(10);
+		delay(DELAY10);
 		draw_pattern(CENTER, abs(inc_scale), random_color, inc_rotate*10, 100);
 		
 		inc_rotate += 0.15;

@@ -188,7 +188,7 @@ int main() {
 		inc_scale = scale*sin(0.017444 * inc_rotate * speed);
 		
 		// draw final pattern animation
-		delay(10);
+		delay(DELAY10);
 		draw_pattern(CENTER, abs(inc_scale), random_color, inc_rotate*10, 100);
 		
 

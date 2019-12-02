@@ -173,7 +173,7 @@ int main() {
 		
 		inc_scale = scale*cos(PI_PER_RADIAN * inc_rotate * speed); // big to small scale, use sin function for otherwise
 		
-		delay(10);
+		delay(DELAY10);
 //		draw_pattern(CENTER, abs(inc_scale), random_color, inc_rotate*10, DELAY100);
 		
 		random_color = rand() % 14 + 1; //random from 1 s.d 14
