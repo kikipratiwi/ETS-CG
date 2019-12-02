@@ -31,8 +31,8 @@
 // take input in radians 
 #define ROUND(a) ((int) (a+0.5))
 #define PI 3.14159265
-#define PI_RADIAN 180
-#define PI_PER_RADIAN (PI/PI_RADIAN)/100
+#define PI_RADIAN 180.0
+#define PI_PER_RADIAN (PI/PI_RADIAN)
 #define DEGREE45 45
 #define DEGREE60 60
 #define DEGREE30 30

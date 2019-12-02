@@ -25,15 +25,15 @@ POINT point_rotate_cw(int xCenter, int yCenter, int x, int y, float degree)
      POINT p_rotate;
      
      int xTrans, yTrans;
-     double val = PI / 180.0;
+      
 
      //tranlasi awal
      xTrans = x - xCenter;
      yTrans = y - yCenter;
 
      //cari point rotate
-     xR = xTrans * cos(val * degree) - yTrans * sin(val * degree);
-     yR = xTrans * sin(val * degree) + yTrans * cos(val * degree);
+     xR = xTrans * cos(PI_PER_RADIAN * degree) - yTrans * sin(PI_PER_RADIAN * degree);
+     yR = xTrans * sin(PI_PER_RADIAN * degree) + yTrans * cos(PI_PER_RADIAN * degree);
 
      //tranlasi akhir  
      xR = xR + (xCenter);
@@ -53,15 +53,15 @@ POINT point_rotate_ccw(int xCenter, int yCenter, int x, int y, float degree)
      POINT p_rotate;
      
      int xTrans, yTrans;
-     double val = PI / 180.0;
+      
 
      //tranlasi awal
      xTrans = x - xCenter;
      yTrans = y - yCenter;
 
      //cari point rotate
-     xR = xTrans * cos(val * degree) 	+ yTrans * sin(val * degree);
-     yR = xTrans * -(sin(val * degree)) + yTrans * cos(val * degree);
+     xR = xTrans * cos(PI_PER_RADIAN * degree) 	+ yTrans * sin(PI_PER_RADIAN * degree);
+     yR = xTrans * -(sin(PI_PER_RADIAN * degree)) + yTrans * cos(PI_PER_RADIAN * degree);
 
      //tranlasi akhir  
      xR = xR + (xCenter);
@@ -313,7 +313,7 @@ void draw_pattern(POINT p_center, int radius, int color, float degree, int _dela
 	float _degree = 0+degree;
 	
 	for(int i=0;i<6;i++){
-		pr = point_rotate_ccw(p_center.x, p_center.y, p_center_top.x, p_center_top.y, _degree);
+		pr = point_rotate_cw(p_center.x, p_center.y, p_center_top.x, p_center_top.y, _degree);
 
 		circle_bresenham(pr.x, pr.y, radius, color);
 		filled_circle_bresenham(p_center.x, p_center.y, 2, WHITE); //for bullet
