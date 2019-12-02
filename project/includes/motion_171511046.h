@@ -9,10 +9,12 @@
 #include <time.h>
 
 /* ==============================================CANVAS================================================= */
-#define MAXWIDTH 	800
-#define MAXHEIGHT	700
-#define HALFWIDTH 	(MAXWIDTH/2)
-#define	HALFHEIGHT	(MAXHEIGHT/2)
+#define ROUND(a) ((int) (a+0.5))
+
+#define _MAXWIDTH 	getmaxx()
+#define _MAXHEIGHT	getmaxy()
+#define _HALFWIDTH 	ROUND(_MAXWIDTH/2)
+#define _HALFHEIGHT	ROUND(_MAXHEIGHT/2)
 #define	FULLDEGREE	360
 
 /* ==============================================DELAY================================================= */
@@ -29,7 +31,6 @@
 // Using macros to convert degree to radian 
 // and call sin() and cos() as these functions 
 // take input in radians 
-#define ROUND(a) ((int) (a+0.5))
 #define PI 3.14159265
 #define PI_RADIAN 180.0
 #define PI_PER_RADIAN (PI/PI_RADIAN)

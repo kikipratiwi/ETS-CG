@@ -3,9 +3,35 @@
 
 int main() {
 	srand(time(NULL));
-
+	
+    
 	// render window
-    initwindow( MAXWIDTH , MAXHEIGHT , "ETS_171511046", 200);
+    initwindow( 800 , 700 , "ETS_171511046", 200);
+
+	int MAXWIDTH, MAXHEIGHT, HALFWIDTH, HALFHEIGHT;
+	int scale = radius;		// initiate scale
+    int inc_scale = scale;	// increment scale
+	int speed = 5;
+	float inc_rotate = 0;	// increment rotate
+	float enhancer_inc_rotate = 0.15;
+
+	int random_color = LIGHTCLAY;
+	bool _true = true;
+    int page = 0;
+    
+	while(1)
+	{
+		
+        setactivepage(page);
+        setvisualpage(1-page);
+        cleardevice();
+		
+		MAXWIDTH = getmaxx();
+		MAXHEIGHT = getmaxy();
+		HALFWIDTH =	round(MAXWIDTH/2);
+		HALFHEIGHT = round(MAXHEIGHT/2);
+		
+		
 
 	/* ===========================================================CIRCLE ANIMATION=================================================================== */
 	// init radius
@@ -158,21 +184,10 @@ int main() {
 	
 /* =======================================================================ANIMATIE FINAL PATTERN================================================================= */
     // scale used as object radius
-	int scale = radius;		// initiate scale
-    int inc_scale = scale;	// increment scale
-	int speed = 5;
-	float inc_rotate = 0;	// increment rotate
-	float enhancer_inc_rotate = 0.15;
 
-	int random_color = LIGHTCLAY;
-	bool _true = true;
-    int page = 0;
 
 	// final pattern animation
-	while(_true) {
-        setactivepage(page);
-        setvisualpage(1-page);
-        cleardevice();
+//	while(_true) {
 		
 		inc_scale = scale*cos(PI_PER_RADIAN * inc_rotate * speed); // big to small scale, use sin function for otherwise
 
@@ -182,7 +197,9 @@ int main() {
 		random_color = rand() % 14 + 1; //random from 1 s.d 14
 		inc_rotate += 0.15;
         page = 1-page;
-	 }
+//	 }
+	 
+	}
 
 	getch();
 	
