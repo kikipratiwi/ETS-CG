@@ -10,7 +10,6 @@
 
 /* ==============================================CANVAS================================================= */
 #define MAXWIDTH  800
-#define MAXWIDTH  800
 #define MAXHEIGHT 700
 #define HALFWIDTH  (MAXWIDTH/2)
 #define	HALFHEIGHT (MAXHEIGHT/2)
