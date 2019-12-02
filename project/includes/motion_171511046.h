@@ -1,7 +1,6 @@
 #ifndef MOTION_171511046_H_INCLUDED
 #define MOTION_171511046_H_INCLUDED
 
-//header
 #include <graphics.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -11,28 +10,34 @@
 
 /* ==============================================CANVAS================================================= */
 #define MAXWIDTH  800
+#define MAXWIDTH  800
 #define MAXHEIGHT 700
 #define HALFWIDTH  (MAXWIDTH/2)
 #define	HALFHEIGHT (MAXHEIGHT/2)
 #define	FULLDEGREE 360
 
+/* ==============================================DELAY================================================= */
+#define DELAY100 100
+#define DELAY200 200
+#define DELAY300 300
+#define DELAY2	 2 
+#define DELAY1	 1 
+
 /* =========================================TRANSFORMATION============================================== */
 // Using macros to convert degree to radian 
 // and call sin() and cos() as these functions 
 // take input in radians 
-#define SIN(x) sin(x * 3.141592653589/180) 
-#define COS(x) cos(x * 3.141592653589/180) 
 #define ROUND(a) ((int) (a+0.5))
 #define PI 3.14159265
+#define PI_RADIAN 180
+#define PI_PER_RADIAN (PI/PI_RADIAN)/100
 #define DEGREE45 45
 #define DEGREE60 60
 #define DEGREE30 30
 #define DEGREE90 90
 
 /* ==============================================COLOR================================================= */
-#define CREAM   (RGB(128, 103, 9))
-#define GRAY    (RGB(105, 105, 105))
-#define MOCCA   (RGB(235, 104, 75))
+#define LIGHTCLAY   (RGB(235, 104, 75))
 
 /* ==============================================CANVAS================================================= */
 void set_canvas(); //not used
@@ -40,6 +45,7 @@ void draw_cartesian_axis(); //not used
 
 /* =========================================TRANSFORMATION============================================== */
 POINT point_rotate_cw(int xCenter, int yCenter, int x, int y, float degree);
+POINT point_rotate_ccw(int xCenter, int yCenter, int x, int y, float degree);
 POINT point_scale(int xCenter, int yCenter, int x, int y, float scale); //not used
 POINT point_translation(int x, int y, int x1, int y1); //not used
 

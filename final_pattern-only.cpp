@@ -23,19 +23,19 @@ int main() {
 //	// put center point
 //	filled_circle_bresenham(HALFWIDTH, HALFHEIGHT, 2, WHITE); delay(DELAY2);
 //	
-	//  initiating 4 center point for animating circle
-	POINT circle_center_point[4];
-		circle_center_point[0].x = HALFWIDTH  - radius;
-		circle_center_point[0].y = HALFHEIGHT + radius;
-		
-		circle_center_point[1].x = HALFWIDTH  + radius;
-		circle_center_point[1].y = HALFHEIGHT + radius;
-		
-		circle_center_point[2].x = HALFWIDTH  + radius;
-		circle_center_point[2].y = HALFHEIGHT - radius;
-		
-		circle_center_point[3].x = HALFWIDTH  - radius;
-		circle_center_point[3].y = HALFHEIGHT - radius;
+//	//  initiating 4 center point for animating circle
+//	POINT circle_center_point[4];
+//		circle_center_point[0].x = HALFWIDTH  - radius;
+//		circle_center_point[0].y = HALFHEIGHT + radius;
+//		
+//		circle_center_point[1].x = HALFWIDTH  + radius;
+//		circle_center_point[1].y = HALFHEIGHT + radius;
+//		
+//		circle_center_point[2].x = HALFWIDTH  + radius;
+//		circle_center_point[2].y = HALFHEIGHT - radius;
+//		
+//		circle_center_point[3].x = HALFWIDTH  - radius;
+//		circle_center_point[3].y = HALFHEIGHT - radius;
 //		
 //
 //	 // put 1st point
@@ -111,9 +111,9 @@ int main() {
 //	// rotate rectangle 45 degrees
 //	animate_rotate_rectangle(CENTER, circle_center_point, DEGREE45);
 //	// animating split up and down rectangle 
-	animate_rotate_translation_rectangle(CENTER, circle_center_point, DEGREE45);
+//	animate_rotate_translation_rectangle(CENTER, circle_center_point, DEGREE45);
 //	// draw last rotate rectangle
-	draw_rotate_rectangle(CENTER, radius);
+//	draw_rotate_rectangle(CENTER, 140);
 //
 //	delay(DELAY200);
 //	
@@ -129,7 +129,7 @@ int main() {
 //	
 //	// draw 4 point
 //	for(int i=0; i<4; i++){
-//		delay(DELAY300); filled_circle_bresenham(circle_center_point[i].x, circle_center_point[i].y, 2, WHITE);
+//		delay(300); filled_circle_bresenham(circle_center_point[i].x, circle_center_point[i].y, 2, WHITE);
 //	}
 //
 //	// remove rectangle
@@ -146,22 +146,21 @@ int main() {
 //
 /* ======================================================================DRAW INITIATE PATTERN=================================================================== */
 
-//	// draw center point
-//	delay(DELAY200);	filled_circle_bresenham(CENTER.x, CENTER.y, 2, WHITE);
-//	// draw 6 circle by rotation
-//	delay(DELAY200);	draw_rotate_translation_circle(CENTER, radius, LIGHTCLAY, DEGREE60, DELAY100);
-//	// draw 12 line by rotation
-//	delay(DELAY200);	delayed_draw_rotate_line_360(CENTER.x, CENTER.y, radius*2, 12);
+	// draw center point
+	delay(DELAY200);	filled_circle_bresenham(CENTER.x, CENTER.y, 2, WHITE);
+	// draw 6 circle by rotation
+	delay(DELAY200);	draw_rotate_translation_circle(CENTER, radius, LIGHTCLAY, DEGREE60, 100);
+	// draw 12 line by rotation
+	delay(DELAY200);	delayed_draw_rotate_line_360(CENTER.x, CENTER.y, radius*2, 12);
 	
 /* =======================================================================ANIMATIE FINAL PATTERN================================================================= */
     // scale used as object radius
-	int scale = radius;		// initiate scale
+	int scale = 100;		// initiate scale
     int inc_scale = scale;	// increment scale
-	int speed = 5;
+	int speed = 6;
 	float inc_rotate = 0;	// increment rotate
-	float enhancer_inc_rotate = 0.15;
 
-	int random_color = LIGHTCLAY;
+	int random_color;
 	bool _true = true;
     int page = 0;
 
@@ -169,15 +168,15 @@ int main() {
 	while(_true) {
         setactivepage(page);
         setvisualpage(1-page);
-//        cleardevice();
+        cleardevice();
 		
-		inc_scale = scale*cos(PI_PER_RADIAN * inc_rotate * speed); // big to small scale, use sin function for otherwise
+		random_color = rand() % 15;
+		inc_scale = scale*sin(0.017444 * inc_rotate * speed);
 		
 		delay(10);
-//		draw_pattern(CENTER, abs(inc_scale), random_color, inc_rotate*10, DELAY100);
+		draw_pattern(CENTER, abs(inc_scale), random_color, inc_rotate*10, 100);
 		
-		random_color = rand() % 14 + 1; //random from 1 s.d 14
-		inc_rotate += enhancer_inc_rotate;
+		inc_rotate += 0.15;
         page = 1-page;
 	 }
 
