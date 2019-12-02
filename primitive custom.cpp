@@ -36,7 +36,7 @@ int main( )
     printf("Masukan koordinat x dan koordinat y = ");
     scanf("%d", &rx);
     scanf("%d", &ry);
-    putpixel(rx, ry, WHITE);
+    putpixel(rx, ry, BLACK);
     
     
     POINT aksen = pointRotation(rx, ry, int x, int y, int deg)
@@ -226,17 +226,17 @@ void ellipseMidPoint (int xCenterenter,int yCenterenter, int Rx,int Ry, int x1, 
          xIncrement = dx / (float) steps;
          yIncrement = dy / (float) steps;
          
-         putpixel (ROUND (x), ROUND(y) , WHITE) ;
+         putpixel (ROUND (x), ROUND(y) , BLACK) ;
          
          for (k=0; k<steps; k++) {
              x += xIncrement;
              y += yIncrement;
              
-             putpixel (ROUND (x), ROUND(y) , WHITE) ;
+             putpixel (ROUND (x), ROUND(y) , BLACK) ;
              if(isHorizontal)
-               putpixel (ROUND (x), ya+dx , WHITE) ;                 
+               putpixel (ROUND (x), ya+dx , BLACK) ;                 
              else
-               putpixel (xa+dy, ROUND(y) , WHITE) ;        
+               putpixel (xa+dy, ROUND(y) , BLACK) ;        
          }
      }
      

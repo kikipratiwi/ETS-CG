@@ -3,9 +3,9 @@
 /* ==============================================CANVAS================================================= */
 void set_canvas()
 {
-	setfillstyle(SOLID_FILL, WHITE); 
+	setfillstyle(SOLID_FILL, BLACK); 
 	rectangle(0, 0, MAXWIDTH, MAXHEIGHT); 
-    floodfill(1,1, WHITE);
+    floodfill(1,1, BLACK);
 }
 
 void draw_cartesian_axis()
@@ -68,6 +68,34 @@ POINT point_translation(int x, int y, int x1, int y1)
 }
 
 /* ======================================DRAW ANIMATED OBJECT========================================== */
+void delayed_draw_rotate_line_360(int x1, int y1, int radius, int n)
+{
+	int x2, y2, xb, yb, x, y, rx, ry;
+	double degree, fulldegree ,arg;
+	 
+	degree = 360/n;
+	
+	x2 = x1+radius;
+	y2 = y1;
+
+	fulldegree = degree;
+	while(fulldegree <= FULLDEGREE){
+		arg = (fulldegree * 0.01745);
+		
+		rx = x2-x1;
+		ry = y2-y1;
+		
+		x = (int) (x1 + (rx) * cos(arg) - (ry)*sin(arg));
+	    y = (int) (y1 + (rx) * sin(arg) - (ry)*cos(arg));
+	    
+	    line_bresenham(x1,y1,x,y, MOCCA);
+		filled_circle_bresenham(x, y, 2, WHITE);
+	    
+	    fulldegree = fulldegree + degree;
+	    delay(100);
+	}
+}
+
 void draw_rotate_line_360(int x1, int y1, int radius, int n)
 {
 	int x2, y2, xb, yb, x, y, rx, ry;
@@ -89,17 +117,16 @@ void draw_rotate_line_360(int x1, int y1, int radius, int n)
 	    y = (int) (y1 + (rx) * sin(arg) - (ry)*cos(arg));
 	    
 	    line_bresenham(x1,y1,x,y, MOCCA);
-		filled_circle_bresenham(x, y, 2, MOCCA);
+		filled_circle_bresenham(x, y, 2, WHITE);
 	    
 	    fulldegree = fulldegree + degree;
-	    delay(100);
 	}
 }
 
-void draw_rotate_point(POINT p_center, POINT p[], int degree)
+void animate_rotate_point(POINT p_center, POINT p[], int degree)
 {
 	POINT pr[4];
-	// int value_added = ang / 5;
+	
 	float _degree = 0;
 	while (_degree <= degree)
 	{	
@@ -110,17 +137,17 @@ void draw_rotate_point(POINT p_center, POINT p[], int degree)
 
 
 		cleardevice();
-		filled_circle_bresenham(pr[0].x, pr[0].y, 2, MOCCA);
-		filled_circle_bresenham(pr[1].x, pr[1].y, 2, MOCCA);
-		filled_circle_bresenham(pr[2].x, pr[2].y, 2, MOCCA);
-		filled_circle_bresenham(pr[3].x, pr[3].y, 2, MOCCA);
+		filled_circle_bresenham(pr[0].x, pr[0].y, 2, WHITE);
+		filled_circle_bresenham(pr[1].x, pr[1].y, 2, WHITE);
+		filled_circle_bresenham(pr[2].x, pr[2].y, 2, WHITE);
+		filled_circle_bresenham(pr[3].x, pr[3].y, 2, WHITE);
 
 		_degree += 1;
 		delay(10);
 	}
 }
 
-void draw_rotate_rectangle(POINT p_center, POINT p[], int degree)
+void animate_rotate_rectangle(POINT p_center, POINT p[], int degree)
 {
 	POINT pr[4];
 	float _degree = 1;
@@ -147,11 +174,82 @@ void draw_rectangle(POINT p[])
 	for(int i=0; i<3; i++)
 		line_bresenham(p[i].x, p[i].y, p[i+1].x, p[i+1].y, MOCCA);
 		
-	line_bresenham(p[3].x, p[3].y, p[0].x, p[0].y, MOCCA);
-		
+	line_bresenham(p[3].x, p[3].y, p[0].x, p[0].y, MOCCA);	
 }
 
-void draw_rotate_translation_circle(POINT p_center, int radius, int color, int degree)
+void animate_rotate_translation_rectangle(POINT p_center, POINT p[], int degree)
+{
+	POINT pr[4];
+
+	//rotate point
+	for(int i=0; i<4; i++)
+		pr[i] = point_rotate_cw(p_center.x, p_center.y, p[i].x, p[i].y, degree);
+
+	int t_inc = 1;
+	POINT p_center_2 = p_center;
+	POINT p_center_3 = p_center;
+
+	int mini_radius = 10;
+	
+	draw_rotate_rectangle(p_center_2, mini_radius);
+	draw_rotate_rectangle(p_center_3, mini_radius);
+	delay(200);
+	
+	// split up
+	while ( t_inc < 100)
+	{
+		t_inc += 1;
+		cleardevice();
+
+		line_bresenham(pr[0].x, pr[0].y + t_inc, pr[1].x, pr[1].y + t_inc, MOCCA);
+		line_bresenham(pr[1].x, pr[1].y + t_inc, pr[2].x, pr[2].y + t_inc, MOCCA);
+		
+		line_bresenham(pr[2].x, pr[2].y - t_inc, pr[3].x, pr[3].y - t_inc, MOCCA);
+		line_bresenham(pr[3].x, pr[3].y - t_inc, pr[0].x, pr[0].y - t_inc, MOCCA);
+
+		// animate mini rectangle
+		p_center_2.x += 3;
+		p_center_3.x -= 3 ;
+		draw_rotate_rectangle(p_center_2, mini_radius);
+		draw_rotate_rectangle(p_center_3, mini_radius);
+
+		delay(10);
+	}
+	
+	delay(200);
+	
+	// split down
+	while ( t_inc > 0)
+	{
+		t_inc -= 1;
+		cleardevice();
+
+		line_bresenham(pr[0].x, pr[0].y + t_inc, pr[1].x, pr[1].y + t_inc, MOCCA);
+		line_bresenham(pr[1].x, pr[1].y + t_inc, pr[2].x, pr[2].y + t_inc, MOCCA);
+		
+		line_bresenham(pr[2].x, pr[2].y - t_inc, pr[3].x, pr[3].y - t_inc, MOCCA);
+		line_bresenham(pr[3].x, pr[3].y - t_inc, pr[0].x, pr[0].y - t_inc, MOCCA);
+
+		// animate mini rectangle
+		draw_rotate_rectangle(p_center_2, mini_radius);
+		draw_rotate_rectangle(p_center_3, mini_radius);
+		p_center_2.x -= 3;
+		p_center_3.x += 3;
+
+		delay(10);
+	}
+}
+
+void draw_rotate_rectangle(POINT p_center, int radius)
+{
+	line_bresenham(p_center.x, 			p_center.y+radius,	p_center.x-radius,	p_center.y,			MOCCA);
+	line_bresenham(p_center.x-radius,	p_center.y,			p_center.x,			p_center.y-radius,	MOCCA);
+	
+	line_bresenham(p_center.x,			p_center.y-radius,	p_center.x+radius,	p_center.y,			MOCCA);
+	line_bresenham(p_center.x+radius,	p_center.y,			p_center.x,			p_center.y+radius,	MOCCA);
+}
+
+void draw_rotate_translation_circle(POINT p_center, int radius, int color, float degree, int _delay)
 {
 	POINT p_center_top;
 	p_center_top.x = p_center.x;
@@ -164,18 +262,54 @@ void draw_rotate_translation_circle(POINT p_center, int radius, int color, int d
 	{
 		pr = point_rotate_cw(p_center.x, p_center.y, p_center_top.x, p_center_top.y, _degree);
 
-		delay(100);
+//		delay(_delay);
 		circle_bresenham(pr.x, pr.y, radius, MOCCA);
-		filled_circle_bresenham(pr.x, pr.y, 2, MOCCA); //for bullet
+		filled_circle_bresenham(pr.x, pr.y, 2, WHITE); //for bullet
 
-		_degree += degree;
+		_degree += 30;
 	}
-	dda_circle(p_center.x, p_center.y, 2*radius, MOCCA);
-	dda_circle(p_center.x, p_center.y, (2*radius)-(radius/4), MOCCA);
+	circle_bresenham(p_center.x, p_center.y, 2*radius, MOCCA);
+	circle_bresenham(p_center.x, p_center.y, (2*radius)-(radius/4), MOCCA);
 
 }
 
-void draw_translation_two_circle(POINT p_center, int radius, int color)
+void draw_pattern(POINT p_center, int radius, int color, float degree, int _delay)
+{
+	POINT p_center_top;
+	p_center_top.x = p_center.x;
+	p_center_top.y = p_center.y+radius;
+
+	POINT pr;
+	float _degree = 0+degree;
+	
+	for(int i=0;i<6;i++){
+		pr = point_rotate_cw(p_center.x, p_center.y, p_center_top.x, p_center_top.y, _degree);
+
+
+		circle_bresenham(pr.x, pr.y, radius, color);
+		filled_circle_bresenham(p_center.x, p_center.y, 2, WHITE); //for bullet
+		filled_circle_bresenham(pr.x, pr.y, 2, WHITE); //for bullet
+
+		_degree += DEGREE60;
+	}
+	
+	_degree = 0+degree;
+	for(int i=0;i<12;i++){
+        pr = point_rotate_cw(p_center.x, p_center.y, p_center.x, p_center.y-(2*radius), _degree);
+        
+		line_bresenham (p_center.x, p_center.y, pr.x, pr.y, color);
+		
+		filled_circle_bresenham(p_center.x, p_center.y, 2, WHITE); //for bullet
+		filled_circle_bresenham(pr.x, pr.y, 2, WHITE); //for bullet
+             
+        _degree += DEGREE30;
+     }
+	
+	circle_bresenham(p_center.x, p_center.y, 2*radius, color);
+	circle_bresenham(p_center.x, p_center.y, (2*radius)-(radius/4), color);
+}
+
+void animate_translation_two_circle(POINT p_center, int radius, int color)
 {
 	POINT p_center_top;
 	POINT p_center_botttom;
@@ -196,69 +330,6 @@ void draw_translation_two_circle(POINT p_center, int radius, int color)
 		y_inc++;
 	}
 
-}
-
-void draw_rotate_scale_rectangle(POINT p_center, POINT p[], int degree)
-{
-	POINT pr[4];
-
-	for(int i=0; i<4; i++)
-		pr[i] = point_rotate_cw(p_center.x, p_center.y, p[i].x, p[i].y, degree);
-
-	int t_inc = 1;
-	POINT p_center_2 = p_center;
-	POINT p_center_3 = p_center;
-
-	draw_scale_rectangle(p_center_2, 10);
-	draw_scale_rectangle(p_center_3, 10);
-	delay(200);
-	
-	while ( t_inc < 100)
-	{
-		t_inc += 1;
-		cleardevice();
-
-		line_bresenham(pr[0].x, pr[0].y + t_inc, pr[1].x, pr[1].y + t_inc, MOCCA);
-		line_bresenham(pr[1].x, pr[1].y + t_inc, pr[2].x, pr[2].y + t_inc, MOCCA);
-		
-		line_bresenham(pr[2].x, pr[2].y - t_inc, pr[3].x, pr[3].y - t_inc, MOCCA);
-		line_bresenham(pr[3].x, pr[3].y - t_inc, pr[0].x, pr[0].y - t_inc, MOCCA);
-
-		p_center_2.x += 3;
-		p_center_3.x -= 3 ;
-		draw_scale_rectangle(p_center_2, 10);
-		draw_scale_rectangle(p_center_3, 10);
-
-		delay(10);
-	}
-	
-	delay(200);
-	while ( t_inc > 0)
-	{
-		t_inc -= 1;
-		cleardevice();
-
-		line_bresenham(pr[0].x, pr[0].y + t_inc, pr[1].x, pr[1].y + t_inc, MOCCA);
-		line_bresenham(pr[1].x, pr[1].y + t_inc, pr[2].x, pr[2].y + t_inc, MOCCA);
-		
-		line_bresenham(pr[2].x, pr[2].y - t_inc, pr[3].x, pr[3].y - t_inc, MOCCA);
-		line_bresenham(pr[3].x, pr[3].y - t_inc, pr[0].x, pr[0].y - t_inc, MOCCA);
-
-		draw_scale_rectangle(p_center_2, 10);
-		draw_scale_rectangle(p_center_3, 10);
-		p_center_2.x -= 3;
-		p_center_3.x += 3 ;
-
-		delay(10);
-	}
-}
-
-void draw_scale_rectangle(POINT p_center, int radius)
-{
-	line_bresenham(p_center.x, p_center.y+radius, p_center.x-radius, p_center.y, MOCCA);
-	line_bresenham(p_center.x-radius, p_center.y, p_center.x, p_center.y-radius, MOCCA);
-	line_bresenham(p_center.x, p_center.y-radius, p_center.x+radius, p_center.y, MOCCA);
-	line_bresenham(p_center.x+radius, p_center.y, p_center.x, p_center.y+radius, MOCCA);
 }
 
 /* =====================================DRAW PRIMITIVE OBJECT========================================== */
@@ -294,7 +365,7 @@ void dda_circle(int xCenter, int yCenter, int radius, int color)
 	}while((yCenter1-sy)<eps || (sx-xCenter1)>eps);
 }
 
-void delayed_dda_circle(int xCenter, int yCenter, int radius, int color, int _delay)
+void draw_two_circle(int xCenter, int yCenter, int radius, int color, int _delay)
 {
 	float xCenter1, xCenter2, yCenter1, yCenter2, eps, sx, sy;
 	int val, i;
@@ -317,7 +388,8 @@ void delayed_dda_circle(int xCenter, int yCenter, int radius, int color, int _de
 		yCenter2 = yCenter1 - eps*xCenter2;
 		
 		delay(_delay);
-		putpixel(xCenter+xCenter2,yCenter-yCenter2,	color);
+		putpixel(xCenter+xCenter2,yCenter-yCenter2+radius,	color);
+		putpixel(xCenter+xCenter2,yCenter-yCenter2-radius,	color);
 		
 		xCenter1=xCenter2;	
 		yCenter1=yCenter2;
@@ -575,7 +647,7 @@ POINT dotted_line_circle(int xCenter, int yCenter, int radius)
 			x = (int) (xCenter + (x_rot) * cos(arg) - (y_rot)*sin(arg));
 			y = (int) (yCenter + (x_rot) * sin(arg) - (y_rot)*cos(arg));
 			
-			line_bresenham(xCenter, yCenter, x_bef, y_bef, WHITE);
+			line_bresenham(xCenter, yCenter, x_bef, y_bef, BLACK);
 			line_bresenham(xCenter, yCenter, x-1, y, MOCCA);
 			
 			_delay=0;
@@ -600,7 +672,7 @@ POINT dotted_line_circle(int xCenter, int yCenter, int radius)
 	}while((yCenter1-sy)<eps || (sx-xCenter1)>eps);
 	
 	//remove last-1 line in circle
-	line_bresenham(xCenter, yCenter, x_bef, y_bef, WHITE);
+	line_bresenham(xCenter, yCenter, x_bef, y_bef, BLACK);
 
 	//draw last  line
 	line_bresenham(xCenter, yCenter, xCenter+radius, yCenter, MOCCA);
@@ -653,7 +725,7 @@ POINT solid_line_circle(int xCenter, int yCenter, int radius)
 			x = (int) (xCenter + (x_rot) * cos(arg) - (y_rot)*sin(arg));
 			y = (int) (yCenter + (x_rot) * sin(arg) - (y_rot)*cos(arg));
 			
-			line_bresenham(xCenter, yCenter, x_bef, y_bef, WHITE);
+			line_bresenham(xCenter, yCenter, x_bef, y_bef, BLACK);
 			line_bresenham(xCenter, yCenter, x-1, y, MOCCA);
 			
 			_delay=0;
@@ -676,7 +748,7 @@ POINT solid_line_circle(int xCenter, int yCenter, int radius)
 	}while((yCenter1-sy)<eps || (sx-xCenter1)>eps);
 	
 	//remove last-1 line in circle
-	line_bresenham(xCenter, yCenter, x_bef, y_bef, WHITE);
+	line_bresenham(xCenter, yCenter, x_bef, y_bef, BLACK);
 
 	//draw last  line
 	line_bresenham(xCenter, yCenter, xCenter+radius, yCenter, MOCCA);

@@ -32,11 +32,11 @@ int main()
 	int radius=100; 
 	
 	// setting border color 
-	int border_color = WHITE; 
+	int border_color = BLACK; 
 	
 	
 	// set color and pattern 
-	setfillstyle(SOLID_FILL,WHITE); 
+	setfillstyle(SOLID_FILL,BLACK); 
 	
 	// x and y is a position and 
 	// radius is for radius of circle 

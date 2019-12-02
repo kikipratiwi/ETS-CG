@@ -18,8 +18,8 @@ int main() {
         /* clears screen */
         cleardevice();
  
-        /* draw a white road */
-        setcolor(WHITE);
+        /* draw a BLACK road */
+        setcolor(BLACK);
         line(0, midy + 37, maxx, midy + 37);
  
         /* Draw Car */

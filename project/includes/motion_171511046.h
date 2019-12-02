@@ -24,15 +24,19 @@
 #define COS(x) cos(x * 3.141592653589/180) 
 #define ROUND(a) ((int) (a+0.5))
 #define PI 3.14159265
+#define DEGREE45 45
+#define DEGREE60 60
+#define DEGREE30 30
+#define DEGREE90 90
 
 /* ==============================================COLOR================================================= */
 #define CREAM   (RGB(128, 103, 9))
 #define GRAY    (RGB(105, 105, 105))
-#define MOCCA   (RGB(125, 101, 64))
+#define MOCCA   (RGB(235, 104, 75))
 
 /* ==============================================CANVAS================================================= */
-void set_canvas();
-void draw_cartesian_axis();
+void set_canvas(); //not used
+void draw_cartesian_axis(); //not used
 
 /* =========================================TRANSFORMATION============================================== */
 POINT point_rotate_cw(int xCenter, int yCenter, int x, int y, float degree);
@@ -40,19 +44,21 @@ POINT point_scale(int xCenter, int yCenter, int x, int y, float scale); //not us
 POINT point_translation(int x, int y, int x1, int y1); //not used
 
 /* ======================================DRAW ANIMATED OBJECT========================================== */
+void delayed_draw_rotate_line_360(int x1, int y1, int radius, int n);
 void draw_rotate_line_360(int x1, int y1, int radius, int n);
-void draw_rotate_point(POINT p_center, POINT p[], int degree);
-void draw_rotate_rectangle(POINT p_center, POINT p[], int degree);
+void animate_rotate_point(POINT p_center, POINT p[], int degree);
+void animate_rotate_rectangle(POINT p_center, POINT p[], int degree);
 void draw_rectangle(POINT p[]);
-void draw_rotate_translation_circle(POINT p_center, int radius, int color, int degree);
-void draw_translation_two_circle(POINT p_center, int radius, int color);
-void draw_rotate_scale_rectangle(POINT p_center, POINT p[], int degree);
-void draw_scale_rectangle(POINT p_center, int radius);
+void animate_rotate_translation_rectangle(POINT p_center, POINT p[], int degree);
+void draw_rotate_rectangle(POINT p_center, int radius);
+void draw_rotate_translation_circle(POINT p_center, int radius, int color, float degree, int _delay);
+void draw_pattern(POINT p_center, int radius, int color, float degree, int _delay);
+void animate_translation_two_circle(POINT p_center, int radius, int color);
 
 /* =====================================DRAW PRIMITIVE OBJECT========================================== */
 // sumber: https://code.cheraus.com/codes/cgraphics/dda_circle.php
 void dda_circle(int xCenter, int yCenter, int radius, int color);
-void delayed_dda_circle(int xCenter, int yCenter, int radius, int color, int _delay); //not used
+void draw_two_circle(int xCenter, int yCenter, int radius, int color, int _delay); //not used
 void circle_bresenham(int xc, int yc, int radius, int color);
 void filled_circle_bresenham(int xc, int yc, int radius, int color);
 

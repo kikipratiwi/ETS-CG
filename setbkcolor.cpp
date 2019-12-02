@@ -90,7 +90,7 @@ int main(void)
 
       /* output a messsage */
 
-      if (bkcol == WHITE)
+      if (bkcol == BLACK)
 
          setcolor(BLUE);
 

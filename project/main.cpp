@@ -2,15 +2,12 @@
 #include <stdio.h>
 
 int main() {
+	srand(time(NULL));
+
 	// render window
     initwindow( MAXWIDTH , MAXHEIGHT , "ETS_171511046", 200);
 
-	// set canvas color and pattern 
-    set_canvas();
-
-//	dradiusaw_cartesian_axis();
-	
-	/* =========================================WATCH ANIMATION============================================== */
+	/* =========================================CIRCLE ANIMATION============================================== */
 	// init radius
 	int radius = 100;
 
@@ -22,135 +19,169 @@ int main() {
 	// // draw center circle
 	// next_line_point = solid_line_circle(HALFWIDTH, HALFHEIGHT, radius);
 	// // remove last line of circle
-	// line_bresenham(next_line_point.x, next_line_point.y, HALFWIDTH, HALFHEIGHT, WHITE);
+	// line_bresenham(next_line_point.x, next_line_point.y, HALFWIDTH, HALFHEIGHT, BLACK);
 	// // put center point
 	// filled_circle_bresenham(HALFWIDTH, HALFHEIGHT, 2, MOCCA); delay(2);
 	
 	//  initiating 4 center point for animating circle
-	POINT center_point[4];
-		center_point[0].x = HALFWIDTH  - radius;
-		center_point[0].y = HALFHEIGHT + radius;
+	POINT circle_center_point[4];
+		circle_center_point[0].x = HALFWIDTH  - radius;
+		circle_center_point[0].y = HALFHEIGHT + radius;
 		
-		center_point[1].x = HALFWIDTH  + radius;
-		center_point[1].y = HALFHEIGHT + radius;
+		circle_center_point[1].x = HALFWIDTH  + radius;
+		circle_center_point[1].y = HALFHEIGHT + radius;
 		
-		center_point[2].x = HALFWIDTH  + radius;
-		center_point[2].y = HALFHEIGHT - radius;
+		circle_center_point[2].x = HALFWIDTH  + radius;
+		circle_center_point[2].y = HALFHEIGHT - radius;
 		
-		center_point[3].x = HALFWIDTH  - radius;
-		center_point[3].y = HALFHEIGHT - radius;
+		circle_center_point[3].x = HALFWIDTH  - radius;
+		circle_center_point[3].y = HALFHEIGHT - radius;
 		
 
 	// // put 1st point
-	// filled_circle_bresenham(center_point[0].x, center_point[0].y, 2, MOCCA); delay(2);
+	// filled_circle_bresenham(circle_center_point[0].x, circle_center_point[0].y, 2, MOCCA); delay(2);
 	// // draw 1st circle
-	// next_line_point = dotted_line_circle(center_point[0].x,center_point[0].y,radius);
+	// next_line_point = dotted_line_circle(circle_center_point[0].x,circle_center_point[0].y,radius);
 	// // remove last line in 1ST circle
-	// line_bresenham(center_point[0].x, center_point[0].y, next_line_point.x, next_line_point.y, WHITE);
+	// line_bresenham(circle_center_point[0].x, circle_center_point[0].y, next_line_point.x, next_line_point.y, BLACK);
 	// // put 1st point
-	// filled_circle_bresenham(center_point[0].x, center_point[0].y, 2, MOCCA); delay(2);
+	// filled_circle_bresenham(circle_center_point[0].x, circle_center_point[0].y, 2, MOCCA); delay(2);
 	
 	// // draw connected line
-	// delayed_line_bresenham(center_point[0].x, center_point[0].y, center_point[1].x, center_point[1].y, MOCCA, 1);
+	// delayed_line_bresenham(circle_center_point[0].x, circle_center_point[0].y, circle_center_point[1].x, circle_center_point[1].y, MOCCA, 1);
 	// // put 2nd point
-	// filled_circle_bresenham(center_point[1].x, center_point[1].y, 2, MOCCA); delay(2);
+	// filled_circle_bresenham(circle_center_point[1].x, circle_center_point[1].y, 2, MOCCA); delay(2);
 	// // remove connected line
-	// line_bresenham(center_point[0].x, center_point[0].y, center_point[1].x, center_point[1].y, WHITE);
+	// line_bresenham(circle_center_point[0].x, circle_center_point[0].y, circle_center_point[1].x, circle_center_point[1].y, BLACK);
 	// // draw 2nd circle
-	// next_line_point = dotted_line_circle(center_point[1].x,center_point[1].y,radius);
+	// next_line_point = dotted_line_circle(circle_center_point[1].x,circle_center_point[1].y,radius);
 	// // remove last line in 2nd circle
-	// line_bresenham(center_point[1].x, center_point[1].y, next_line_point.x, next_line_point.y, WHITE);
+	// line_bresenham(circle_center_point[1].x, circle_center_point[1].y, next_line_point.x, next_line_point.y, BLACK);
 	// // put 2nd point
-	// filled_circle_bresenham(center_point[1].x, center_point[1].y, 2, MOCCA); delay(2);
+	// filled_circle_bresenham(circle_center_point[1].x, circle_center_point[1].y, 2, MOCCA); delay(2);
 	
 	// // draw connected line
-	// delayed_line_bresenham(center_point[1].x, center_point[1].y, center_point[2].x, center_point[2].y, MOCCA, 1);
+	// delayed_line_bresenham(circle_center_point[1].x, circle_center_point[1].y, circle_center_point[2].x, circle_center_point[2].y, MOCCA, 1);
 	// // put 3rd point
-	// filled_circle_bresenham(center_point[2].x, center_point[2].y, 2, MOCCA); delay(2);
+	// filled_circle_bresenham(circle_center_point[2].x, circle_center_point[2].y, 2, MOCCA); delay(2);
 	// // remove connected line
-	// line_bresenham(center_point[1].x, center_point[1].y, center_point[2].x, center_point[2].y, WHITE);
+	// line_bresenham(circle_center_point[1].x, circle_center_point[1].y, circle_center_point[2].x, circle_center_point[2].y, BLACK);
 	// // draw 3rd circle
-	// next_line_point = dotted_line_circle(center_point[2].x,center_point[2].y,radius);
+	// next_line_point = dotted_line_circle(circle_center_point[2].x,circle_center_point[2].y,radius);
 	// // remove last line in 3rd circle
-	// line_bresenham(center_point[2].x, center_point[2].y, next_line_point.x, next_line_point.y, WHITE);
+	// line_bresenham(circle_center_point[2].x, circle_center_point[2].y, next_line_point.x, next_line_point.y, BLACK);
 	// // put 3rd point
-	// filled_circle_bresenham(center_point[2].x, center_point[2].y, 2, MOCCA); delay(2);
+	// filled_circle_bresenham(circle_center_point[2].x, circle_center_point[2].y, 2, MOCCA); delay(2);
 	
 	// // draw connected line
-	// delayed_line_bresenham(center_point[2].x, center_point[2].y, center_point[3].x, center_point[3].y, MOCCA, 1);
+	// delayed_line_bresenham(circle_center_point[2].x, circle_center_point[2].y, circle_center_point[3].x, circle_center_point[3].y, MOCCA, 1);
 	// // put 4th point
-	// filled_circle_bresenham(center_point[3].x, center_point[3].y, 2, MOCCA); delay(2);
+	// filled_circle_bresenham(circle_center_point[3].x, circle_center_point[3].y, 2, MOCCA); delay(2);
 	// // remove connected line
-	// line_bresenham(center_point[2].x, center_point[2].y, center_point[3].x, center_point[3].y, WHITE);
+	// line_bresenham(circle_center_point[2].x, circle_center_point[2].y, circle_center_point[3].x, circle_center_point[3].y, BLACK);
 	// // draw 4th circle
-	// next_line_point = dotted_line_circle(center_point[3].x,center_point[3].y,radius);
+	// next_line_point = dotted_line_circle(circle_center_point[3].x,circle_center_point[3].y,radius);
 	// // remove last line in 4th circle
-	// line_bresenham(center_point[3].x, center_point[3].y, next_line_point.x, next_line_point.y, WHITE);
+	// line_bresenham(circle_center_point[3].x, circle_center_point[3].y, next_line_point.x, next_line_point.y, BLACK);
 	// // put 4th point
-	// filled_circle_bresenham(center_point[3].x, center_point[3].y, 2, MOCCA); delay(2);
+	// filled_circle_bresenham(circle_center_point[3].x, circle_center_point[3].y, 2, MOCCA); delay(2);
 
-	/* =========================================SQUARE ANIMATION============================================== */
+	/* ============================================DRAW SQUARE================================================ */
 	
-	// draw rectangle and remove dotted circle
-	delayed_line_bresenham(center_point[0].x, center_point[0].y, center_point[1].x, center_point[1].y, MOCCA, 1);
-	dda_circle(center_point[0].x,center_point[0].y, radius, BLACK);
-
-	delayed_line_bresenham(center_point[1].x, center_point[1].y, center_point[2].x, center_point[2].y, MOCCA, 1);
-	dda_circle(center_point[1].x,center_point[1].y, radius, WHITE);
-
-	delayed_line_bresenham(center_point[2].x, center_point[2].y, center_point[3].x, center_point[3].y, MOCCA, 1);
-	dda_circle(center_point[2].x,center_point[2].y, radius, WHITE);
-
-	delayed_line_bresenham(center_point[3].x, center_point[3].y, center_point[0].x, center_point[0].y, MOCCA, 1);
-	dda_circle(center_point[3].x,center_point[3].y, radius, WHITE);
+//	// draw rectangle and remove dotted circle
+//	delayed_line_bresenham(circle_center_point[0].x, circle_center_point[0].y, circle_center_point[1].x, circle_center_point[1].y, MOCCA, 1);
+//	dda_circle(circle_center_point[0].x,circle_center_point[0].y, radius, BLACK);
+//
+//	delayed_line_bresenham(circle_center_point[1].x, circle_center_point[1].y, circle_center_point[2].x, circle_center_point[2].y, MOCCA, 1);
+//	dda_circle(circle_center_point[1].x,circle_center_point[1].y, radius, BLACK);
+//
+//	delayed_line_bresenham(circle_center_point[2].x, circle_center_point[2].y, circle_center_point[3].x, circle_center_point[3].y, MOCCA, 1);
+//	dda_circle(circle_center_point[2].x,circle_center_point[2].y, radius, BLACK);
+//
+//	delayed_line_bresenham(circle_center_point[3].x, circle_center_point[3].y, circle_center_point[0].x, circle_center_point[0].y, MOCCA, 1);
+//	dda_circle(circle_center_point[3].x,circle_center_point[3].y, radius, BLACK);
 	
+	delay(200);
 	cleardevice();
-	set_canvas();
-
-	line_bresenham(center_point[0].x, center_point[0].y, center_point[1].x, center_point[1].y, MOCCA);
-	line_bresenham(center_point[1].x, center_point[1].y, center_point[2].x, center_point[2].y, MOCCA);
-	line_bresenham(center_point[2].x, center_point[2].y, center_point[3].x, center_point[3].y, MOCCA);
-	line_bresenham(center_point[3].x, center_point[3].y, center_point[0].x, center_point[0].y, MOCCA);
-
+	
+	/* ============================================DRAW ROTATE SQUARE ANIMATION================================================ */
 	POINT CENTER;
 	CENTER.x = HALFWIDTH;
 	CENTER.y = HALFHEIGHT;
-
-	 draw_rotate_rectangle(CENTER, center_point, 45);
-	 draw_rotate_scale_rectangle(CENTER, center_point, 45);
-	 draw_scale_rectangle(CENTER, 140);
-
-	POINT pr[4];
-	int deg=45;
-	int i;
-	for(i=0; i<4; i++)
-	{
-		pr[i] = point_rotate_cw(CENTER.x, CENTER.y, center_point[i].x, center_point[i].y, deg);
-	}	
-
-	 draw_rotate_rectangle(CENTER, pr, 45);
-	for(i=0; i<4; i++)
-	{
-		filled_circle_bresenham(center_point[i].x, center_point[i].y, 2, MOCCA); delay(2);
-	}	
 	
-	 delayed_line_bresenham(center_point[0].x, center_point[0].y, center_point[1].x, center_point[1].y, BLACK, 1);
-	 delayed_line_bresenham(center_point[1].x, center_point[1].y, center_point[2].x, center_point[2].y, BLACK, 1);
-	 delayed_line_bresenham(center_point[2].x, center_point[2].y, center_point[3].x, center_point[3].y, BLACK, 1);
-	 delayed_line_bresenham(center_point[3].x, center_point[3].y, center_point[0].x, center_point[0].y, BLACK, 1);
-	
-	draw_rotate_point(CENTER, center_point, 90);
-	cleardevice();
-	circle_bresenham(CENTER.x, CENTER.y+100, radius, MOCCA);
-	circle_bresenham(CENTER.x, CENTER.y-100, radius, MOCCA);
+	// rotate rectangle 45 degrees
+//	animate_rotate_rectangle(CENTER, circle_center_point, DEGREE45);
+	// animating split up and down rectangle 
+//	animate_rotate_translation_rectangle(CENTER, circle_center_point, DEGREE45);
+	// draw last rotate rectangle
+//	draw_rotate_rectangle(CENTER, 140);
 
-	draw_translation_two_circle(CENTER, radius, MOCCA);
-	filled_circle_bresenham(CENTER.x, CENTER.y, 2, MOCCA);
-	draw_rotate_translation_circle(CENTER, radius, MOCCA, 60);
-	draw_rotate_line_360(CENTER.x, CENTER.y, radius*2, 12);
-	// cleardevice();
-
+	delay(200);
 	
+	/* ============================================DRAW POINT CIRCLE ROTATE ANIMATION================================================ */
+	POINT rotate_point[4];
+	
+	// rotate point
+	for(int i=0; i<4; i++)
+		rotate_point[i] = point_rotate_cw(CENTER.x, CENTER.y, circle_center_point[i].x, circle_center_point[i].y, DEGREE45);
+
+	// rotate rectangle back to 0
+//	animate_rotate_rectangle(CENTER, rotate_point, DEGREE45);
+	
+	// draw 4 point
+	for(int i=0; i<4; i++){
+//		delay(300); filled_circle_bresenham(circle_center_point[i].x, circle_center_point[i].y, 2, WHITE);
+	}
+
+	// remove rectangle
+//	delayed_line_bresenham(circle_center_point[0].x, circle_center_point[0].y, circle_center_point[1].x, circle_center_point[1].y, BLACK, 1);
+//	delayed_line_bresenham(circle_center_point[1].x, circle_center_point[1].y, circle_center_point[2].x, circle_center_point[2].y, BLACK, 1);
+//	delayed_line_bresenham(circle_center_point[2].x, circle_center_point[2].y, circle_center_point[3].x, circle_center_point[3].y, BLACK, 1);
+//	delayed_line_bresenham(circle_center_point[3].x, circle_center_point[3].y, circle_center_point[0].x, circle_center_point[0].y, BLACK, 1);
+
+	// rotating point
+//	animate_rotate_point(CENTER, circle_center_point, DEGREE90);
+//	draw_two_circle(CENTER.x, CENTER.y, radius, MOCCA, 1);
+	// animating two circle
+//	delay(200); animate_translation_two_circle(CENTER, radius, MOCCA);
+
+/* ==================================================DRAW INITIATE PATTERN===================================================== */
+
+	// draw center point
+	delay(200);	filled_circle_bresenham(CENTER.x, CENTER.y, 2, MOCCA);
+	// draw 6 circle by rotation
+//	delay(200);	draw_rotate_translation_circle(CENTER, radius, MOCCA, DEGREE60, 100);
+	// draw 12 line by rotation
+//	delay(200);	delayed_draw_rotate_line_360(CENTER.x, CENTER.y, radius*2, 12);
+	
+/* ==================================================ANIMATIE FINAL PATTERN===================================================== */
+    // scale used as object radius
+	int scale = 100; // initiate scale
+    int inc_scale = scale; // increment scale
+	int speed = 6;
+	float inc_rotate = 0; // increment rotate
+
+	int random_color;
+	bool _true = true;
+    int page = 0;
+
+//	 final pattern animation
+	while(_true) {
+        setactivepage(page);
+        setvisualpage(1-page);
+        cleardevice();
+		
+		random_color = rand() % 15;
+		inc_scale = scale*sin(0.017444 * inc_rotate * speed);
+		
+		delay(10);
+		draw_pattern(CENTER, abs(inc_scale), random_color, inc_rotate*10, 100);
+		
+
+		inc_rotate += 0.15;
+        page = 1-page;
+	 }
+
 
 	getch();
 	

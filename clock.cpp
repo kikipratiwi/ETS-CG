@@ -232,7 +232,7 @@ void makeCircle(int x, int y,int r){
 	for(i=0;i<=360;i++){
 		a=r*cos(i*(M_PI/180));
 		b=r*sin(i*(M_PI/180));
-		putpixel(x+a,y+b,WHITE);
+		putpixel(x+a,y+b,BLACK);
 	}
 }
 
@@ -310,7 +310,7 @@ void makeCircle2(int x, int y, int r){
 	
 			a = r*cos((i+270)*(M_PI/180)) ;
 			b = r*sin((i+270)*(M_PI/180)) ;
-			putpixel(x+a,y+b,WHITE);
+			putpixel(x+a,y+b,BLACK);
 	
 			delay(50);
 	}
@@ -322,7 +322,7 @@ void makeCircle3(int x, int y, int r){
 	for(j=0;j<=45;j++){
 		a = r*cos(j*(M_PI/180)) ;
 		b = r*sin(j*(M_PI/180)) ;
-		putpixel(x+a,y+b,WHITE);
+		putpixel(x+a,y+b,BLACK);
 		putpixel(x+b,y+a,YELLOW);
 		
 		a = r*cos((j+90)*(M_PI/180)) ;
@@ -350,7 +350,7 @@ void makeElipse(int x, int y, int r1, int r2){
 	for(i=0;i<=360;i++){
 		a=r1*cos(i*(M_PI/180));
 		b=r2*sin(i*(M_PI/180));
-		putpixel(x+a,y+b,WHITE);
+		putpixel(x+a,y+b,BLACK);
 	}
 }
 
@@ -360,19 +360,19 @@ void makeElipse2(int x, int y, int r1, int r2){
 	for(i=0;i<=90;i++){
 		a=r1*cos(i*(M_PI/180));
 		b=r2*sin(i*(M_PI/180));
-		putpixel(x+a,y+b,WHITE);
+		putpixel(x+a,y+b,BLACK);
 		
 		a=r1*cos((i+90)*(M_PI/180));
 		b=r2*sin((i+90)*(M_PI/180));
-		putpixel(x+a,y+b,WHITE);
+		putpixel(x+a,y+b,BLACK);
 		
 		a=r1*cos((i+180)*(M_PI/180));
 		b=r2*sin((i+180)*(M_PI/180));
-		putpixel(x+a,y+b,WHITE);
+		putpixel(x+a,y+b,BLACK);
 		
 		a=r1*cos((i+270)*(M_PI/180));
 		b=r2*sin((i+270)*(M_PI/180));
-		putpixel(x+a,y+b,WHITE);
+		putpixel(x+a,y+b,BLACK);
 	}	
 }
 
